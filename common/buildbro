@@ -1,7 +1,15 @@
 #!/bin/bash -e
-BRO=$1
-VER=$2
-BUILD_TYPE=${3-Release}
+lte() {
+    [  "$1" = "`echo -e "$1\n$2" | sort -V | head -n1`" ]
+}
+
+lt() {
+    [ "$1" = "$2" ] && return 1 || lte $1 $2
+}
+
+VER=$1
+lt ${VER} 3.0.0 && BRO=bro || BRO=zeek
+BUILD_TYPE=${2-Release}
 
 URL=https://download.zeek.org/${BRO}-${VER}.tar.gz
 

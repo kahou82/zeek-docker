@@ -16,7 +16,8 @@ RUN apt-get -y install build-essential git bison flex gawk cmake swig libssl1.0-
 #Checkout bro
 
 # Build bro
-ENV VER 3.0.0
+ARG ZEEK_VERSION
+ENV VER ${ZEEK_VERSION}
 ADD ./common/buildbro ${WD}/common/buildbro
 RUN ${WD}/common/buildbro zeek ${VER}
 
@@ -34,7 +35,7 @@ RUN touch /usr/share/GeoIP/.notempty
 
 # Make final image
 FROM debian:stretch
-ENV VER 3.0.0
+ENV VER ${ZEEK_VERSION}
 #install runtime dependencies
 RUN apt-get update \
     && apt-get -y install --no-install-recommends libpcap0.8 libssl1.0.2 libmaxminddb0 python2.7-minimal \

@@ -1,7 +1,7 @@
 all: $(patsubst %.Dockerfile,build-stamp_%,$(wildcard *.Dockerfile))
 
 build-stamp_%: %.Dockerfile
-	docker build --build-arg MAXMIND_LICENSE_KEY -t broplatform/bro:$(*) -f $< . 
+	docker build --build-arg MAXMIND_LICENSE_KEY --build-arg ZEEK_VERSION=$(*) -t broplatform/bro:$(*) -f Dockerfile . 
 	touch $@
 
 push-stamp_%: build-stamp_%
